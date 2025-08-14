@@ -1,12 +1,12 @@
 "use client";
 
-// import createPostAction from "@/actions/createPostAction";
 import { useUser } from "@clerk/nextjs";
 import { useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { ImageIcon, XIcon } from "lucide-react";
-// import { toast } from "sonner";
+import createPostAction from "@/actions/createPostAction";
+import { toast } from "sonner";
 
 function PostForm() {
   const ref = useRef<HTMLFormElement>(null);
@@ -27,7 +27,7 @@ function PostForm() {
     setPreview(null);
 
     try {
-      // await createPostAction(formDataCopy);
+      await createPostAction(formDataCopy);
     } catch (error) {
       console.error(`Error creating post: ${error}`);
 
@@ -45,15 +45,15 @@ function PostForm() {
   return (
     <div className="mb-2">
       <form
-        // ref={ref}
-        // action={(formData) => {
-        //   const promise = handlePostAction(formData);
-        //   toast.promise(promise, {
-        //     loading: "Creating post...",
-        //     success: "Post created!",
-        //     // error: (e) => "Error creating post: " + e.message,
-        //   });
-        // }}
+        ref={ref}
+        action={(formData) => {
+          const promise = handlePostAction(formData);
+          toast.promise(promise, {
+            loading: "Creating post...",
+            success: "Post created!",
+            error: (e) => "Error creating post: " + e.message,
+          });
+        }}
         className="p-3 bg-white rounded-lg border"
       >
         <div className="flex items-center space-x-2">
